@@ -21,7 +21,24 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="js/spark-md5.min.js"></script>
+    <script type="text/javascript" src="js/mp3Upload.js"></script>
+<script type="text/javascript">
+    const hashString = window.location.hash;
+            //document.getElementById("parameter").innerHTML = hashString;
+            const hashArr = hashString.split("&");
+            const urlTokenArr = hashArr[0].split("=");
+            const userToken = urlTokenArr[1];
+            const idToken = urlTokenArr[1].split(".")[1];
 
+            //document.getElementById("token").innerHTML = userToken;
+            var dec = atob(idToken);
+            var jsonify = JSON.parse(dec);
+            var userMail = jsonify["email"];
+            document.getElementById("userEmail").innerHTML = userMail;
+            if(typeof userToken === 'undefined' or typeof userMail === 'undefined'){
+                window.location.replace("https://test4145.auth.us-east-1.amazoncognito.com/login?client_id=3q0eltutbo3u11nbbj7rn9v44&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://ec2co-ecsel-1trws6oenoe0r-1919761618.us-east-1.elb.amazonaws.com:8080/Splitter/");
+            }
+</script>
 
 </head>
 
@@ -114,8 +131,8 @@
     <input type="text" name="begin" id="begin_id" value="">
     <label>end:</label>
     <input type="text" name="end" id="end_id" value="">
-    <input id="Doc" type="file" name="mp3">
-    <input type="submit">
+    <input name="fileInput" id="Doc" type="file" name="mp3">
+    <button onclick="uploadClicked()">submit</button>
 </div>
 
 
@@ -140,7 +157,7 @@
     <label>end:</label>
     <input type="text" name="end" value="">
     <input type="file" name="mp3">
-    <input type="submit">
+    <div class="btn" onclick="uploadClicked()">Submit</div>
 
     
   </div>
@@ -249,104 +266,7 @@
     <script >
 
     
-            const hashString = window.location.hash;
-            //document.getElementById("parameter").innerHTML = hashString;
-            const hashArr = hashString.split("&");
-            const urlTokenArr = hashArr[0].split("=");
-            const userToken = urlTokenArr[1];
-            const idToken = urlTokenArr[1].split(".")[1];
-
-            //document.getElementById("token").innerHTML = userToken;
-            var dec = atob(idToken);
-            var jsonify = JSON.parse(dec);
-            var userMail = jsonify["email"];
-            document.getElementById("userEmail").innerHTML = userMail;
-            if(typeof userToken === 'undefined' or typeof userMail === 'undefined'){
-                window.location.replace("https://test4145.auth.us-east-1.amazoncognito.com/login?client_id=3q0eltutbo3u11nbbj7rn9v44&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://ec2co-ecsel-1trws6oenoe0r-1919761618.us-east-1.elb.amazonaws.com:8080/Splitter/");
-            }
-
-    function uploadClicked() {
-      computeMD5(document.getElementById("Doc").files[0], tryHashUpload)
-    };
-    function tryHashUploadCallback(response){
-      if(response.data["state"]==="failed"){
-        console.log("hash upload failed");
-        fileUpload(document.getElementById("Doc").files[0]);
-      }else if(response.data["state"]==="succeeded"){
-        console.log("hash upload succeeded. TaskID: "+response.data["id"]);
-      }
-      console.log(response)
-    };
-    function tryHashUpload(hash) {
-      axios.request({
-            method: "get",
-            url: "/Splitter_war_exploded/HashUploadServlet",
-            params: {
-              userToken: 1,
-              begin:0,
-              end:10000,
-              hash:String(hash)
-            }
-          }
-      ).then(tryHashUploadCallback)
-    };
-    function fileUpload(file) {
-      let params = new FormData()
-      params.append('userToken', userToken)
-      params.append("begin", "0")
-      params.append("end", "1000")
-      params.append('mp3', file)
-      axios({
-            method: 'post',
-            url: '/Splitter_war_exploded/FileUploadServlet',
-            data: params,
-            headers: {'Content-Type': 'multipart/form-data;boundary = ' + new Date().getTime()},
-            onUploadProgress: function (p) {
-              let complete = (p.loaded / p.total * 100 | 0) + '%'
-              console.log('上传' + complete)
-            }
-          }
-      ).then(function (response) {
-        if(response.data["state"]==="failed"){
-          console.log("file upload failed");
-        }else if(response.data["state"]==="succeeded"){
-          console.log("file upload succeeded. TaskID: "+response.data["id"]);
-        }
-      }).catch(function (error) {
-        console.log(error)
-      })
-    };
-    function computeMD5(f,callback) {
-      var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-          file = f,
-          chunkSize = 2097152,                             // Read in chunks of 2MB
-          chunks = Math.ceil(file.size / chunkSize),
-          currentChunk = 0,
-          spark = new SparkMD5.ArrayBuffer(),
-          fileReader = new FileReader();
-      fileReader.onload = function (e) {
-        console.log('read chunk nr', currentChunk + 1, 'of', chunks);
-        spark.append(e.target.result);                   // Append array buffer
-        currentChunk++;
-        if (currentChunk < chunks) {
-          loadNext();
-        } else {
-          console.log('finished loading');
-          let hash=spark.end();
-          console.info('computed hash', hash);  // Compute hash
-          callback(hash);
-        }
-      };
-      fileReader.onerror = function () {
-        console.warn('oops, something went wrong.');
-      };
-      function loadNext() {
-        var start = currentChunk * chunkSize,
-            end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
-        fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
-      }
-      loadNext();
-  }
+            
 
     </script>
 
