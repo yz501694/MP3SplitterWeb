@@ -1,4 +1,10 @@
-
+function callback(file){
+  console.log("here");
+  console.log(file.files);
+  console.log(file);
+}
+    
+    
     function uploadClicked() {
       let file= document.getElementsByName("fileInput")[0].files[0];
       console.log(file);

@@ -125,15 +125,15 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-<div id="new_inputs" style="display:none">
+<!-- <div id="new_inputs" style="display:none">
     <input hidden="" type="text" name="userToken" value="0">
     <label>begin:</label>
     <input type="text" name="begin" id="begin_id" value="">
     <label>end:</label>
     <input type="text" name="end" id="end_id" value="">
-    <input name="fileInput" id="Doc" type="file" name="mp3">
+    <input name="fileInput" id="Doc" type="file" name="mp3" onchange="callback(this);">
     <button onclick="uploadClicked()">submit</button>
-</div>
+</div> -->
 
 
 
@@ -156,7 +156,7 @@
     <input type="text" name="begin" value="">
     <label>end:</label>
     <input type="text" name="end" value="">
-    <input type="file" name="mp3">
+    <input name="fileInput" id="Doc" type="file" name="mp3" onchange="callback(this);">
     <div class="btn" onclick="uploadClicked()">Submit</div>
 
     
