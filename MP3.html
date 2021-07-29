@@ -34,9 +34,11 @@
             var dec = atob(idToken);
             var jsonify = JSON.parse(dec);
             var userMail = jsonify["email"];
-            document.getElementById("userEmail").innerHTML = userMail;
-            if(typeof userToken === 'undefined' or typeof userMail === 'undefined'){
-                window.location.replace("https://test4145.auth.us-east-1.amazoncognito.com/login?client_id=3q0eltutbo3u11nbbj7rn9v44&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://ec2co-ecsel-1trws6oenoe0r-1919761618.us-east-1.elb.amazonaws.com:8080/Splitter/");
+            //document.getElementById("userEmail").innerHTML = userMail;
+            console.log(userToken);
+            console.log(userMail);
+            if( userToken === 'undefined' || userMail === 'undefined'){
+               window.location.replace("https://test4145.auth.us-east-1.amazoncognito.com/login?client_id=3q0eltutbo3u11nbbj7rn9v44&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://ec2co-ecsel-1trws6oenoe0r-1919761618.us-east-1.elb.amazonaws.com:8080/Splitter/");
             }
 </script>
 
