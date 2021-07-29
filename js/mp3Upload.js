@@ -13,11 +13,13 @@ function callback(file){
     };
 
     function contQuery(Id){
+        console.log("enter contQuery");
         var uploadWindow = document.getElementById("uploadCard");
         uploadWindow.style.display = "none";
         var wipWindow = document.getElementById("wipCard");
         wipWindow.style.display = "";
         setInterval(function(Id){
+            console.log("inner contQuery");
             axios.request(
                 {
                     method: "get",
