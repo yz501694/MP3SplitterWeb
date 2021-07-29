@@ -29,7 +29,12 @@ function polling(id){
     function (response) {
       console.log("polling response: ");
       console.log(response);
-      setTimeout(function(){polling(id)},3000)
+      data=response.data;
+      if(data==="no result"){
+        setTimeout(function(){polling(id)},3000)
+      }else{
+        console.log("download URL: "+data);
+      }
     }
   ).catch(function (error) {
     console.log(error)
