@@ -140,7 +140,7 @@
 
 
                 <div class="container-fluid">
-                    <div  class="row">
+                    <div  class="row" id="uploadCard">
                     <div class="col-xl-12 col-md-16 mb-1">
                     <div class="card border-left-primary shadow h-100 py-2">
   <div class="card-header">
@@ -159,7 +159,7 @@
     <label>end:</label>
     <input type="text" name="end" value="">
     <input name="fileInput" id="Doc" type="file" name="mp3" onchange="callback(this);">
-    <div class="btn" onclick="uploadClicked()">Submit</div>
+    <div class="btn btn-primary" onclick="uploadClicked()">Submit</div>
 
     
   </div>
@@ -167,7 +167,7 @@
 </div>
 </div>
 
-<div class="row">
+<div class="row" id="wipCard" style="display: none;">
 <div class="col-xl-12 col-md-16 mb-1">
 <div class="card border-left-primary shadow h-100 py-2">
   <div class="card-header">
@@ -184,7 +184,7 @@
 
 
 
-<div class="row">
+<div class="row" id="resultCard" style="display: none;">
 <div class="col-xl-12 col-md-16 mb-1">
 <div class="card border-left-primary shadow h-100 py-2">
   <div class="card-header">

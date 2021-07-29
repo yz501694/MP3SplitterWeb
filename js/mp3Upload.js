@@ -11,6 +11,31 @@ function callback(file){
       console.log(file);
       computeMD5(file, tryHashUpload)
     };
+
+    function contQuery(Id){
+        var uploadWindow = document.getElementById("uploadCard");
+        uploadWindow.style.display = "none";
+        var wipWindow = document.getElementById("wipCard");
+        wipWindow.style.display = "";
+        setInterval(function(Id){
+            axios.request(
+                {
+                    method: "get",
+                    url: "/Splitter_war_exploded/GetTaskResultServlet",
+                    param: {
+                        taskId: Id
+                    }
+                }
+            ).then(
+                function(response){
+                    console.log(response);
+                }
+            ).catch(function (error) {
+                console.log(error)
+            })
+        },3000)
+    };
+
     function tryHashUploadCallback(response){
       if(response.data["state"]==="failed"){
         console.log("hash upload failed");
@@ -54,6 +79,7 @@ function callback(file){
           console.log("file upload failed");
         }else if(response.data["state"]==="succeeded"){
           console.log("file upload succeeded. TaskID: "+response.data["id"]);
+          contQuery(response.data["id"]);
         }
       }).catch(function (error) {
         console.log(error)
