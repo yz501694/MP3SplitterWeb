@@ -34,6 +34,10 @@ function polling(id){
         setTimeout(function(){polling(id)},3000)
       }else{
         console.log("download URL: "+data);
+        document.getElementById("wipCard").style.display = "none";
+        var resultWindow = document.getElementById("resultCard");
+        resultWindow.style.display = "";
+        document.getElementById("downloadBtn").setAttribute("href",data);
       }
     }
   ).catch(function (error) {
