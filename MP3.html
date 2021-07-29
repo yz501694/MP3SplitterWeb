@@ -21,6 +21,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="js/spark-md5.min.js"></script>
+    <script type="text/javascript" src="js/subscribe.js"></script>
     <script type="text/javascript" src="js/mp3Upload.js"></script>
     <script type="text/javascript">
         let hashString = "unauth";
@@ -150,7 +151,7 @@
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-header">
                                 Welcome to MP3 Splitter!
-                                <div id="Subscribe_Button" class="button btn-primary btn">Subscribe</div>
+                                <div id="Subscribe_Button" class="button btn-primary btn" onclick="subscribe(userMail)">Subscribe</div>
                             </div>
                             <div id="Test" class="card-body ">
 
