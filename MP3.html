@@ -23,22 +23,31 @@
     <script type="text/javascript" src="js/spark-md5.min.js"></script>
     <script type="text/javascript" src="js/mp3Upload.js"></script>
     <script type="text/javascript">
-        const hashString = window.location.hash;
+        let hashString = "unauth";
+        hashString = window.location.hash;
+        console.log(hashString);
+        if(hashString === "") {
+            window.location.replace("https://web.cs.dal.ca/~zhaohe/redr.html");
+        }
         //document.getElementById("parameter").innerHTML = hashString;
-        const hashArr = hashString.split("&");
-        const urlTokenArr = hashArr[0].split("=");
-        const userToken = urlTokenArr[1];
-        const idToken = urlTokenArr[1].split(".")[1];
+        else {
+            let hashArr = hashString.split("&");
+            let urlTokenArr = hashArr[0].split("=");
+            let userToken = urlTokenArr[1];
+            let idToken = urlTokenArr[1].split(".")[1];
 
-        //document.getElementById("token").innerHTML = userToken;
-        var dec = atob(idToken);
-        var jsonify = JSON.parse(dec);
-        var userMail = jsonify["email"];
-        //document.getElementById("userEmail").innerHTML = userMail;
-        console.log(typeof userToken);
-        console.log(typeof userMail);
-        if (userToken === 'undefined' || userMail === 'undefined') {
-            window.location.replace("https://test4145.auth.us-east-1.amazoncognito.com/login?client_id=3q0eltutbo3u11nbbj7rn9v44&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://ec2co-ecsel-1trws6oenoe0r-1919761618.us-east-1.elb.amazonaws.com:8080/Splitter/");
+            //document.getElementById("token").innerHTML = userToken;
+            var dec = atob(idToken);
+            var jsonify = JSON.parse(dec);
+            var userMail = jsonify["email"];
+            var UUID = jsonify["sub"];
+            //document.getElementById("userEmail").innerHTML = userMail;
+            console.log(userToken);
+            console.log(userMail);
+            console.log(UUID);
+            if (userToken === 'undefined' || userMail === 'undefined') {
+
+            }
         }
     </script>
 
