@@ -1,14 +1,20 @@
+function callback(file) {
+  console.log("here");
+  console.log(file.files);
+  console.log(file);
+}
+
 function uploadClicked() {
   let file = document.getElementsByName("fileInput")[0].files[0];
   console.log(file);
-
   computeMD5(file, tryHashUpload)
 };
 
 function contQuery(id) {
-  let uploadWindow = document.getElementById("uploadCard");
+  console.log("enter contQuery");
+  var uploadWindow = document.getElementById("uploadCard");
   uploadWindow.style.display = "none";
-  let wipWindow = document.getElementById("wipCard");
+  var wipWindow = document.getElementById("wipCard");
   wipWindow.style.display = "";
   polling(id)
 };
@@ -29,7 +35,7 @@ function polling(id){
       }else{
         console.log("download URL: "+data);
         document.getElementById("wipCard").style.display = "none";
-        let resultWindow = document.getElementById("resultCard");
+        var resultWindow = document.getElementById("resultCard");
         resultWindow.style.display = "";
         document.getElementById("downloadBtn").setAttribute("href",data);
       }
@@ -50,27 +56,23 @@ function tryHashUploadCallback(response) {
   console.log(response)
 };
 function tryHashUpload(hash) {
-  let begin = document.getElementById("beginInput").value;
-  let end = document.getElementById("endInput").value;
   axios.request({
     method: "get",
     url: "/Splitter_war_exploded/HashUploadServlet",
     params: {
       userToken: 1,
-      begin: begin,
-      end: end,
+      begin: 0,
+      end: 10000,
       hash: String(hash)
     }
   }
   ).then(tryHashUploadCallback)
 };
 function fileUpload(file) {
-  let begin = document.getElementById("beginInput").value;
-  let end = document.getElementById("endInput").value;
   let params = new FormData()
   params.append('userToken', userToken)
-  params.append("begin", begin)
-  params.append("end", end)
+  params.append("begin", "0")
+  params.append("end", "1000")
   params.append('mp3', file)
   axios({
     method: 'post',
@@ -94,7 +96,7 @@ function fileUpload(file) {
   })
 };
 function computeMD5(f, callback) {
-  let blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+  var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
     file = f,
     chunkSize = 2097152,                             // Read in chunks of 2MB
     chunks = Math.ceil(file.size / chunkSize),
