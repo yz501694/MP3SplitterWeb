@@ -14,262 +14,268 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="js/spark-md5.min.js"></script>
+    <script type="text/javascript" src="js/subscribe.js"></script>
     <script type="text/javascript" src="js/mp3Upload.js"></script>
-<script type="text/javascript">
-    const hashString = window.location.hash;
-            //document.getElementById("parameter").innerHTML = hashString;
-            const hashArr = hashString.split("&");
-            const urlTokenArr = hashArr[0].split("=");
-            const userToken = urlTokenArr[1];
-            const idToken = urlTokenArr[1].split(".")[1];
+    <script type="text/javascript">
+        let hashString = "unauth";
+        hashString = window.location.hash;
+        console.log(hashString);
+        if(hashString === "") {
+            window.location.replace("https://web.cs.dal.ca/~zhaohe/redr.html");
+        }
+        //document.getElementById("parameter").innerHTML = hashString;
+        else {
+            let hashArr = hashString.split("&");
+            let urlTokenArr = hashArr[0].split("=");
+            let userToken = urlTokenArr[1];
+            let idToken = urlTokenArr[1].split(".")[1];
 
             //document.getElementById("token").innerHTML = userToken;
             var dec = atob(idToken);
             var jsonify = JSON.parse(dec);
             var userMail = jsonify["email"];
-            document.getElementById("userEmail").innerHTML = userMail;
-            if(typeof userToken === 'undefined' or typeof userMail === 'undefined'){
-                window.location.replace("https://test4145.auth.us-east-1.amazoncognito.com/login?client_id=3q0eltutbo3u11nbbj7rn9v44&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://ec2co-ecsel-1trws6oenoe0r-1919761618.us-east-1.elb.amazonaws.com:8080/Splitter/");
+            var UUID = jsonify["sub"];
+            //document.getElementById("mailDisplay").innerHTML = userMail;
+
+            //document.getElementById("userEmail").innerHTML = userMail;
+            console.log(userToken);
+            console.log(userMail);
+            console.log(UUID);
+            if (userToken === 'undefined' || userMail === 'undefined') {
+
             }
-</script>
+        }
+    </script>
 
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">MP3 Splitter </div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <p id="userEmail" style="display: none;"></p>
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        
-                        <li>
-                            
-                        </li>
-
-                       
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                               
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-<!-- <div id="new_inputs" style="display:none">
-    <input hidden="" type="text" name="userToken" value="0">
-    <label>begin:</label>
-    <input type="text" name="begin" id="begin_id" value="">
-    <label>end:</label>
-    <input type="text" name="end" id="end_id" value="">
-    <input name="fileInput" id="Doc" type="file" name="mp3" onchange="callback(this);">
-    <button onclick="uploadClicked()">submit</button>
-</div> -->
-
-
-
-                <div class="container-fluid">
-                    <div  class="row">
-                    <div class="col-xl-12 col-md-16 mb-1">
-                    <div class="card border-left-primary shadow h-100 py-2">
-  <div class="card-header">
-    Welcome to MP3 Splitter!
-    <div id="Subscribe_Button" class="button btn-primary btn">Subscribe</div>
-  </div>
-  <div id="Test" class="card-body ">
-
-
-
-    <input hidden="" type="text" name="hash" value="hash">
-    <label hidden="">userToken:</label>
-    <input hidden="" type="text" name="userToken" value="0">
-    <label>begin:</label>
-    <input type="text" name="begin" value="">
-    <label>end:</label>
-    <input type="text" name="end" value="">
-    <input name="fileInput" id="Doc" type="file" name="mp3" onchange="callback(this);">
-    <div class="btn" onclick="uploadClicked()">Submit</div>
-
-    
-  </div>
-  </div>
-</div>
-</div>
-
-<div class="row">
-<div class="col-xl-12 col-md-16 mb-1">
-<div class="card border-left-primary shadow h-100 py-2">
-  <div class="card-header">
-    Welcome to MP3 Splitter!
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Splitting in progress</h5>
-    <p class="card-text">Your files will be ready after process is completed</p>
-  </div>
-  
-</div>
-</div>
-</div>
-
-
-
-<div class="row">
-<div class="col-xl-12 col-md-16 mb-1">
-<div class="card border-left-primary shadow h-100 py-2">
-  <div class="card-header">
-    Welcome to MP3 Splitter!
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Work Completed!</h5>
-    <p class="card-text">Please click following button to download your files</p>
-    <a href="#" class="btn btn-primary">Download</a>
-  </div>
- </div> 
-</div>
-</div>
-                </div>
-                <!-- /.container-fluid -->
-
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
             </div>
-            <!-- End of Main Content -->
+            <div class="sidebar-brand-text mx-3">MP3 Splitter</div>
+        </a>
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <p id="userEmail" style="display: none;"></p>
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+
+                    <li>
+
+                    </li>
+
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="mailDisplay">Douglas McGee</span>
+                            <img class="img-profile rounded-circle"
+                                 src="img/undraw_profile.svg">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+
+                            <a class="dropdown-item" href="https://test4145.auth.us-east-1.amazoncognito.com/logout?client_id=3q0eltutbo3u11nbbj7rn9v44&logout_uri=https://web.cs.dal.ca/~zhaohe/blank.html" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <!-- <div id="new_inputs" style="display:none">
+                <input hidden="" type="text" name="userToken" value="0">
+                <label>begin:</label>
+                <input type="text" name="begin" id="begin_id" value="">
+                <label>end:</label>
+                <input type="text" name="end" id="end_id" value="">
+                <input name="fileInput" id="Doc" type="file" name="mp3" onchange="callback(this);">
+                <button onclick="uploadClicked()">submit</button>
+            </div> -->
+
+
+            <div class="container-fluid">
+                <div class="row" id="uploadCard">
+                    <div class="col-xl-12 col-md-16 mb-1">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-header">
+                                Welcome to MP3 Splitter!
+                                <div id="Subscribe_Button" class="button btn-primary btn" onclick="subscribe(userMail)">Subscribe</div>
+                            </div>
+                            <div id="Test" class="card-body ">
+
+
+                                <input hidden="" type="text" name="hash" value="hash">
+                                <label hidden="">userToken:</label>
+                                <input hidden="" type="text" name="userToken" value="0">
+                                <label>begin:</label>
+                                <input type="text" name="begin" value="" id="beginInput">
+                                <label>end:</label>
+                                <input type="text" name="end" value="" id="endInput">
+                                <input name="fileInput" id="Doc" type="file" name="mp3">
+                                <div class="btn btn-primary" onclick="uploadClicked()">Submit</div>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+
+                <div class="row" id="wipCard" style="display: none;">
+                    <div class="col-xl-12 col-md-16 mb-1">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-header">
+                                Welcome to MP3 Splitter!
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Splitting in progress</h5>
+                                <p class="card-text">Your files will be ready after process is completed</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" id="resultCard" style="display: none;">
+                    <div class="col-xl-12 col-md-16 mb-1">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-header">
+                                Welcome to MP3 Splitter!
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Work Completed!</h5>
+                                <p class="card-text">Please click following button to download your files</p>
+                                <a id="downloadBtn" href="#" class="btn btn-success" download>Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Content Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+</div>
+<!-- End of Page Wrapper -->
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="https://test4145.auth.us-east-1.amazoncognito.com/logout?client_id=3q0eltutbo3u11nbbj7rn9v44&logout_uri=https://web.cs.dal.ca/~zhaohe/blank.html">Logout</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap core JavaScript-->
+<!-- Bootstrap core JavaScript-->
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+<!-- Page level plugins -->
+<script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+<!-- Page level custom scripts -->
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
 
-    
 
-    <script >
+<script>
+    window.onload = function(){
+        (document.getElementById("mailDisplay").innerHTML = userMail);
+    }
 
-    
-            
-
-    </script>
-
+</script>
 
 
 </body>
