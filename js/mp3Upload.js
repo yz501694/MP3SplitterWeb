@@ -23,7 +23,7 @@ function polling(id){
   axios.request(
       {
         method: "get",
-        url: "/GetTaskResultServlet?taskID="+String(id)
+        url: "/Splitter/GetTaskResultServlet?taskID="+String(id)
       }
   ).then(
       function (response) {
@@ -60,7 +60,7 @@ function tryHashUpload(hash) {
     let end = document.getElementById("endInput").value;
   axios.request({
         method: "get",
-        url: "/HashUploadServlet",
+        url: "/Splitter/HashUploadServlet",
         params: {
           userToken: 1,
           begin: begin,
@@ -80,7 +80,7 @@ function fileUpload(file) {
   params.append('mp3', file)
   axios({
         method: 'post',
-        url: '/FileUploadServlet',
+        url: '/Splitter/FileUploadServlet',
         data: params,
         headers: { 'Content-Type': 'multipart/form-data;boundary = ' + new Date().getTime() },
         onUploadProgress: function (p) {
