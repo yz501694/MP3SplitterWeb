@@ -1,7 +1,7 @@
 function subscribe(email) {
     axios.request({
             method: "get",
-            url: "/Splitter_war_exploded/EmailSubscribeServlet",
+            url: "/Splitter/EmailSubscribeServlet",
             params: {
                 email: String(email)
             }
